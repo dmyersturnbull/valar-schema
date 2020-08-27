@@ -3,8 +3,6 @@
 Schema for Valar.
 - `schema.sql` ... core database
 - `views.sql` ... table views
-- `mandos.sql` ... cheminformatcs and expression data
-- `queue.sql` ... Airflow queue for inserting jobs
 - `scripts/` ... Potentially useful scripts
 
 **NOTE:** This repository is slightly out-of-date.
@@ -14,13 +12,23 @@ Schema for Valar.
 
 #### Compound IDs and names
 
-There are a number of ID, which all mean different things. A _compound_ corresponds to an Inchi string, which is a unique representation of a chemical structure. Note that this forbids mixtures. An _batch_ is a stock/batch of a compound, mixture, or _exposure_; it refers to the compound (if possible), purchase date, location, and supplier. An exposure is something like heat or shaking. A batch can have a _tag_, which is a unique name. This is not necessary for batches corresponding to compounds, but is critical for mixtures and exposures. For example, wasabi should have a tag called "wasabi".
+There are a number of ID, which all mean different things.
+A _compound_ corresponds to an Inchi string, which is a unique representation of a chemical structure. Note that this forbids mixtures.
+A _batch_ is a stock/batch of a compound, mixture, or exposure; it refers to the compound (if possible), purchase date, location, and supplier.
+A batch can have a _tag_, which is a unique name. This is not necessary for batches corresponding to compounds, but is critical for mixtures and exposures.
+For example, wasabi should have a tag called "wasabi".
 
-No two different chemical structures have the same `compounds.inchi`, `compounds.inchikey`, or `compounds.smiles`. A structure can have multiple SMILES but only one Inchi and Inchikey. Inchikeys are great for lookups because they’re short, but you can’t determine a structure without the full Inchi. `compounds.inchikey_connectivity` uniquely describes a configuration of atoms without stereochemistry.
+No two different chemical structures have the same `compounds.inchi`, `compounds.inchikey`, or `compounds.smiles`.
+A structure can have multiple SMILES but only one Inchi and Inchikey.
+InChIKeys are great for lookups because they’re short, but you can’t determine a structure without the full Inchi.
+`compounds.inchikey_connectivity` uniquely describes a configuration of atoms without stereochemistry.
 
 #### How frames and features are stored
 
-Modern relational databases do not permit array types for some conceptual reasons. Unfortunately, this is tricky in our case. To work around this, `assay_frames.frames` stores data as a block of unsigned big-endian bytes in a `blob`. `well_features` stores data as a block of big-endian unsigned IEEE 754 binary32 floats; so every 4 bytes constitutes a float. Because Java and Scala only have signed types, these are interconverted.
+Modern relational databases do not permit array types for some conceptual reasons. Unfortunately, this is tricky in our case.
+To work around this, `assay_frames.frames` stores data as a block of unsigned big-endian bytes in a `blob`.
+`well_features` stores data as a block of big-endian unsigned IEEE 754 binary32 floats; so every 4 bytes constitutes a float.
+Because Java and Scala only have signed types, these are interconverted.
 
 #### How hashes are defined
 
