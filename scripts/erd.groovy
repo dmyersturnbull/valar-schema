@@ -2,11 +2,7 @@
 Taken almost entirely from https://gist.github.com/agea/6591881
 The author is Andrea Agili
 
-To run, you'll need to run something like this:
-wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.40.zip && unzip mysql-connector-java-5.1.40.zip
-mv mysql-connector-java-5.1.40-bin.jar ~/.groovy/lib
-rm mysql-connector-java-5.1.40.zip
-rm -r mysql-connector-java-5.1.40
+To run, you'll need mysql-connector on the classpath
 */
 
 import groovy.sql.*
@@ -48,18 +44,21 @@ tableRS.close()
 
 sql.connection.close()
 
-println """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+println """
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns/graphml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/graphml http://www.yworks.com/xml/schema/graphml/1.0/ygraphml.xsd">
   <key for="node" id="d0" yfiles.type="nodegraphics"/>
   <key attr.name="description" attr.type="string" for="node" id="d1"/>
   <key for="edge" id="d2" yfiles.type="edgegraphics"/>
   <key attr.name="description" attr.type="string" for="edge" id="d3"/>
   <key for="graphml" id="d4" yfiles.type="resources"/>
-  <graph id="${config.schema}" edgedefault="directed">"""
+  <graph id="${config.schema}" edgedefault="directed">
+"""
 
 tables.each { k,v ->
 	nodeId = "${config.schema}_${k}"
-	println """<node id="${nodeId}">
+	println """
+<node id="${nodeId}">
 <data key="d0">
 <y:ShapeNode>
 <y:Geometry height="30.0" width="${nodeId.length() * 8}.0" x="0.0" y="0.0"/>
@@ -70,13 +69,15 @@ tables.each { k,v ->
 <y:DropShadow color="#B3A691" offsetX="2" offsetY="2"/>
 </y:ShapeNode>
 </data>
-</node>"""
+</node>
+"""
 }
 
 tables.each { k,v ->
 	v.each { referer ->
 		edgeId = "${config.schema}_${referer}_${k}"
-		println """<edge id="${edgeId}" source="${config.schema}_${referer}" target="${config.schema}_${k}">
+		println """
+<edge id="${edgeId}" source="${config.schema}_${referer}" target="${config.schema}_${k}">
 <data key="d2">
 <y:PolyLineEdge>
 <y:Path sx="0.0" sy="13.5" tx="0.0" ty="-15.0"/>
@@ -86,11 +87,13 @@ tables.each { k,v ->
 <y:BendStyle smoothed="false"/>
 </y:PolyLineEdge>
 </data>
-</edge>"""
+</edge>
+"""
 	}
 }
 
-println """<data key="d4">
+println """
+  <data key="d4">
     <y:Resources/>
   </data>
   </graph>

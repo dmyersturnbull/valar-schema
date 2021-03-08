@@ -5,7 +5,6 @@ Valar-schema is licensed under the [Apache License, version 2.0](https://www.apa
 
 **For pull requests:** If you can, please update `CHANGELOG.md` and add your name below.
 
-
 ### Contributors
 
 - Cole Helsell

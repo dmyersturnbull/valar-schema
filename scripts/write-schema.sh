@@ -19,7 +19,15 @@ if (( $# > 0 )); then
 	exit 1
 fi
 
+mysqldump \
+  --skip-add-drop-table \
+  --single-transaction \
+  --host=127.0.0.1 \
+  --port="${valar_port}" \
+  --user="${valar_user_}" \
+  --password="${valar_password_}" \
+  --no-data \
+  "${db_name}" \
+  > "schema-${db_name}.sql"
 
-mysqldump --skip-add-drop-table --single-transaction -h 127.0.0.1 -P "${valar_port}" -u "${valar_user}" --password="${valar_password}" --no-data "${db_name}" > "schema-${db_name}.sql"
 sed -r -i -e 's/AUTO_INCREMENT=[0-9]+ //g' "schema-${db_name}.sql"
-

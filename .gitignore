@@ -1,20 +1,29 @@
-# General
+# General hidden or unwanted
 .*
 ~*
-*.so
-*.log
-*.tar
-*.tar.gz
-*.zip
-*.bz2
+*~
+*#
+Thumbs.db
+*.bak
+*.swp
+tmp/
 cache/
 out/
-*.junk
 
-# Database
-#config/
+# Log files and binary files
+*.log
+*.zip
+*.tar.gz
+*.gz
+*.tar
+*.z7
+*.exe
+*.msi
+*.pkg
+*.dll
+*.so
 
-# Scala and Java
+# Scala, Java, and Groovy
 *.class
 hs_err_pid*
 
@@ -27,6 +36,32 @@ src_managed
 project/boot
 project/plugins/project
 
-!.git/hooks/nbstripout
+# Python temp and build files
+docs/html/
+__pycache__/
+__pypackages__/
+*.py[cod]
+*$py.class
+*.egg-info
+pip-wheel-metadata
+share/python-wheels/
+build/
+dist/
+eggs/
+sdist/
+docs/_build
+cython_debug/
 
+# Files from other languages
+*.o
+*.stackdump
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+deps/deps.jl
+
+!/.dockerignore
+!.editorconfig
 !.gitignore
+!.pre-commit-config.yaml
+!.github

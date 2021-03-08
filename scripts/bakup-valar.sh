@@ -21,12 +21,20 @@ if (( $# > 0 )); then
 	exit 1
 fi
 
-
-for t in $(mysql -NBA -u "${valar_user}" --password="${valar_password}" -D "${db_name}" -e 'show tables'); do
+for t in $(mysql -NBA -u "${valar_user_}" --password="${valar_password_}" -D "${db_name}" -e 'show tables'); do
 	echo "Backing up $t..."
 	# 2147483648 is the max
 	# output blobs as hex, then gzip. It's a bit weird but is more compressed and makes files that are easier to view.
-	mysqldump --single-transaction --hex-blob --max_allowed_packet=2147483648 -P "${valar_port}" -u "${valar_user_}" --password="${valar_password_}" "${db_name}" "${t}" | gzip > "${loc}/${t}.sql.gz"
+	mysqldump \
+	--single-transaction \
+	--hex-blob \
+	--max_allowed_packet=2147483648 \
+	--port="${valar_port}" \
+	--user="${valar_user_}" \
+	--password="${valar_password_}" \
+	"${db_name}" \
+	"${t}" \
+	| gzip > "${loc}/${t}.sql.gz"
 done
 
 echo "Backed up to ${loc}"

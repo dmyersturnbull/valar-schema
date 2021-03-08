@@ -1,22 +1,22 @@
 cff-version: 1.1.0
 message: Software reference
 title: valar-schema
-version: 1.0.0
+version: 0.1.0
 abstract: SQL schema for Valar
 authors:
-    -
-        family-names: Myers-Turnbull
-        given-names: Douglas
+  -
+    family-names: Myers-Turnbull
+    given-names: Douglas
 contributors:
-    -
-        family-names: Ki
-        given-names: Chris S
+  -
+    family-names: Ki
+    given-names: Chris S
 	-
-		family-names: Helsell
-		given-names: Cole
+	  family-names: Helsell
+	  given-names: Cole
 keywords:
-    - zebrafish
-    - behavior
-    - cheminformatics
-	- database
+  - zebrafish
+  - behavior
+  - cheminformatics
+  - database
 date-released: 2020-05-23T20:00:00.000Z

@@ -14,8 +14,10 @@ if (( $# > 0 )); then
 	exit 1
 fi
 
-mv mysql-connector-java-5.1.40-bin.jar ~/.groovy/lib
-rm mysql-connector-java-5.1.40.zip
-rm -r mysql-connector-java-5.1.40
+if [[ ! -e "{$HOME}/.groovy" ]]; then
+  mkdir "{$HOME}/.groovy"
+fi
+wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.23.zip
+unzip mysql-connector-java-8.0.23.zip -d "{$HOME}/.groovy"
 
 groovy erd.groovy > erd.graphml
